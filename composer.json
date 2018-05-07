@@ -1,6 +1,6 @@
 {
   "name":"metabolism/wordpress-bundle",
-  "version": "1.0.x",
+  "version": "3.4.0",
   "description": "Wordpress SF bundle",
   "license": "GPL-3.0-or-later",
   "require": {
@@ -41,7 +41,7 @@
       }
     },
     "branch-alias": {
-      "dev-1.0.x": "1.0.x-dev"
+      "dev-3.4.x": "3.4.x-dev"
     }
   },
   "autoload" : {
