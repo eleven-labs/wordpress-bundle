@@ -6,6 +6,9 @@ class Loader{
 
 	public static function all(){
 
+		if( defined('WP_INSTALLING') and WP_INSTALLING )
+			return;
+
 		if( defined('WPINC') ){
 
 			global $_config;
