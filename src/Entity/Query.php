@@ -1,7 +1,4 @@
 <?php
-/**
- * User: Paul Coudeville <paul@metabolism.fr>
- */
 
 namespace Metabolism\WordpressBundle\Entity;
 
@@ -11,8 +8,7 @@ use Metabolism\WordpressBundle\Entity\Term,
 	Metabolism\WordpressBundle\Entity\Post;
 
 /**
- * Class Post
- * @see \Timber\Post
+ * Class Query
  *
  * @package Metabolism\WordpressBundle\Entity
  */

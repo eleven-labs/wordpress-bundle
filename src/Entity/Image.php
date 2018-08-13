@@ -6,8 +6,7 @@
 namespace Metabolism\WordpressBundle\Entity;
 
 /**
- * Class Post
- * @see \Timber\Term
+ * Class Image
  *
  * @package Metabolism\WordpressBundle\Entity
  */

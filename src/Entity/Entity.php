@@ -1,14 +1,11 @@
 <?php
-/**
- * User: Paul Coudeville <paul@metabolism.fr>
- */
 
 namespace Metabolism\WordpressBundle\Entity;
 
 use Metabolism\WordpressBundle\Helper\ACF;
 
 /**
- * Class Post
+ * Class Entity
  *
  * @package Metabolism\WordpressBundle\Entity
  */

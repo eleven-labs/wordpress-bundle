@@ -69,6 +69,8 @@ post_type:
       - title
       - excerpt
       - thumbnail
+    #columns:
+     # - thumbnail
     labels:
       name:           'Guides'
       singular_name:  'Guide'

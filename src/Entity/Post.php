@@ -1,10 +1,6 @@
 <?php
-/**
- * User: Paul Coudeville <paul@metabolism.fr>
- */
 
 namespace Metabolism\WordpressBundle\Entity;
-
 
 use Metabolism\WordpressBundle\Entity\Image;
 use Metabolism\WordpressBundle\Entity\Term;
@@ -55,8 +51,11 @@ class Post extends Entity
 
 			$df = get_option('date_format');
 			
-			$post->post_date = (string) mysql2date( get_option('date_format'), $post->post_date);
+			$post->post_date = (string) mysql2date( $df, $post->post_date);
 			$post->post_date = apply_filters('get_the_date', $post->post_date, $df);
+
+			$post->post_modified = (string) mysql2date( $df, $post->post_modified);
+			$post->post_modified = apply_filters('get_the_date', $post->post_modified, $df);
 
 			$post->link = get_permalink( $post );
 			$post->template = get_page_template_slug( $post );
