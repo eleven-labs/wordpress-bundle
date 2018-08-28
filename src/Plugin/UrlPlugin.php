@@ -14,8 +14,13 @@ class UrlPlugin {
 	 */
 	public function networkSiteURL($url)
 	{
-		if( WP_FOLDER && strpos($url,WP_FOLDER) === false )
-			return str_replace('/wp-admin', WP_FOLDER.'/wp-admin', $url);
+		if( WP_FOLDER && strpos($url, WP_FOLDER) === false )
+		{
+			$url = str_replace('/wp-login', WP_FOLDER.'/wp-login', $url);
+			$url = str_replace('/wp-admin', WP_FOLDER.'/wp-admin', $url);
+
+			return $url;
+		}
 		else
 			return $url;
 	}
@@ -76,7 +81,6 @@ class UrlPlugin {
 
 		add_action('init', function()
 		{
-
 			// Handle subfolder in url
 			if ( is_feed() || get_query_var( 'sitemap' ) )
 				return;
