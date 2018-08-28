@@ -494,7 +494,15 @@ Trait ContextTrait
 				$terms[$term->term_id] = $term;
 		}
 
-		$this->data[$key] = $terms;
+		$ordered_terms =[];
+
+		foreach ($args['taxonomy'] as $taxonomy){
+
+			if( isset($terms[$taxonomy]) )
+				$ordered_terms[$taxonomy] = $terms[$taxonomy];
+		}
+
+		$this->data[$key] = $ordered_terms;
 
 		return $this->data[$key];
 	}
