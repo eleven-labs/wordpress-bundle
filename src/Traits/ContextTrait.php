@@ -114,7 +114,7 @@ Trait ContextTrait
 			'languages'          => $languages,
 			'is_admin'           => current_user_can('manage_options'),
 			'home_url'           => home_url(),
-			'search_url'         => '/'.str_replace('/%search%', '', $wp_rewrite->get_search_permastruct()),
+			'search_url'         => get_search_link(),
 			'privacy_policy_url' => get_privacy_policy_url(),
 			'maintenance_mode'   => wp_maintenance_mode()
 		];

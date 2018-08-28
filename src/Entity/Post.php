@@ -13,7 +13,7 @@ use Metabolism\WordpressBundle\Entity\Term;
 class Post extends Entity
 {
 	public $excerpt, $thumbnail, $link, $template;
-	private $_next, $_prev;
+	private $_next, $_prev, $_post;
 
 	/**
 	 * Post constructor.
@@ -49,6 +49,8 @@ class Post extends Entity
 			if( !$post || is_wp_error($post) )
 				return false;
 
+			$this->_post = $post;
+
 			$df = get_option('date_format');
 			
 			$post->post_date = (string) mysql2date( $df, $post->post_date);
@@ -76,8 +78,11 @@ class Post extends Entity
 
 		global $post;
 		$old_global = $post;
+		$post = $this->_post;
 
 		$_next = get_next_post($in_same_term , $excluded_terms, $taxonomy);
+
+		$post = $old_global;
 
 		if( $_next )
 			$this->_next = new Post($_next->ID);
@@ -88,18 +93,21 @@ class Post extends Entity
 
 	public function prev($in_same_term = false, $excluded_terms = '', $taxonomy = 'category') {
 
-		if( !is_null($this->_next) )
-			return $this->_next;
+		if( !is_null($this->_prev) )
+			return $this->_prev;
 
 		global $post;
 		$old_global = $post;
+		$post = $this->_post;
 
-		$_next = get_previous_post($in_same_term , $excluded_terms, $taxonomy);
+		$_prev = get_previous_post($in_same_term , $excluded_terms, $taxonomy);
 
-		if( $_next )
-			$this->_next = new Post($_next->ID);
+		$post = $old_global;
 
-		return $this->_next;
+		if( $_prev )
+			$this->_prev = new Post($_prev->ID);
+
+		return $this->_prev;
 	}
 
 

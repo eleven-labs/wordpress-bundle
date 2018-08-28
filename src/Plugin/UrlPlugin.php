@@ -51,6 +51,10 @@ class UrlPlugin {
 
 		global $wp_rewrite;
 
+		$search_slug = get_option( 'search_rewrite_slug' );
+		if( !empty($search_slug) )
+			$wp_rewrite->search_base = $search_slug;
+
 		$search_post_type_permastuct = str_replace('/%search%', '/%post_type%/%search%', $wp_rewrite->get_search_permastruct());
 		$regex = str_replace('%search%', '([^/]*)', str_replace('%post_type%', '([^/]*)', $search_post_type_permastuct));
 		add_rewrite_rule('^'.$regex.'/'.$wp_rewrite->pagination_base.'/([0-9]{1,})/?', 'index.php?s=$matches[2]&post_type=$matches[1]&paged=$matches[3]', 'top');
@@ -62,8 +66,6 @@ class UrlPlugin {
 
 	public function __construct($config)
 	{
-
-
 		add_filter('option_siteurl', [$this, 'optionSiteURL'] );
 		add_filter('network_site_url', [$this, 'networkSiteURL'] );
 		add_filter('home_url', [$this, 'homeURL'] );
