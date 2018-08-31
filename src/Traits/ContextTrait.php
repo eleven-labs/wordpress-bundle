@@ -484,6 +484,16 @@ Trait ContextTrait
 				foreach ($terms as &$term_group)
 					$term_group = TermsPlugin::sortHierarchically( $term_group );
 			}
+
+			$ordered_terms =[];
+
+			foreach ($args['taxonomy'] as $taxonomy){
+
+				if( isset($terms[$taxonomy]) )
+					$ordered_terms[$taxonomy] = $terms[$taxonomy];
+			}
+
+			$terms = $ordered_terms;
 		}
 		else
 		{
@@ -494,15 +504,7 @@ Trait ContextTrait
 				$terms[$term->term_id] = $term;
 		}
 
-		$ordered_terms =[];
-
-		foreach ($args['taxonomy'] as $taxonomy){
-
-			if( isset($terms[$taxonomy]) )
-				$ordered_terms[$taxonomy] = $terms[$taxonomy];
-		}
-
-		$this->data[$key] = $ordered_terms;
+		$this->data[$key] = $terms;
 
 		return $this->data[$key];
 	}
