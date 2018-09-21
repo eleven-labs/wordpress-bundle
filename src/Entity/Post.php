@@ -49,7 +49,7 @@ class Post extends Entity
 			if( !$post || is_wp_error($post) )
 				return false;
 
-			$this->_post = $post;
+			$this->_post = clone $post;
 
 			$df = get_option('date_format');
 			
@@ -122,7 +122,9 @@ class Post extends Entity
 			if( $wpseo_primary_term )
 				$term = $wpseo_primary_term->get_primary_term();
 		}
-		else {
+
+		if( !$term ){
+
 			$terms = get_the_terms($this->ID, $tax);
 			if( count($terms) )
 				$term = $terms[0];

@@ -5,15 +5,16 @@
 
 namespace Metabolism\WordpressBundle\Traits;
 
-use Metabolism\WordpressBundle\Entity\Comment;
-use Metabolism\WordpressBundle\Helper\ACF;
+use Metabolism\WordpressBundle\Helper\ACF,
+	Metabolism\WordpressBundle\Helper\Query;
+
 use Metabolism\WordpressBundle\Plugin\TermsPlugin;
 use Metabolism\WordpressBundle\Provider\WooCommerceProvider;
 
 use Metabolism\WordpressBundle\Entity\Post,
-	Metabolism\WordpressBundle\Entity\Query,
 	Metabolism\WordpressBundle\Entity\Term,
-	Metabolism\WordpressBundle\Entity\Menu;
+	Metabolism\WordpressBundle\Entity\Menu,
+	Metabolism\WordpressBundle\Entity\Comment;
 
 
 /**
@@ -514,27 +515,31 @@ Trait ContextTrait
 	 * Add breadcrumd entries
 	 *
 	 */
-	public function addBreadcrumb($data=[])
+	public function addBreadcrumb($data=[], $add_current=true, $add_home=true)
 	{
 		$breadcrumb = [];
 
-		$breadcrumb[] = ['title' => __('Home'), 'link' => get_home_url()];
+		if( $add_home )
+			$breadcrumb[] = ['title' => __('Home'), 'link' => get_home_url()];
 
 		$breadcrumb = array_merge($breadcrumb, $data);
 
-		if( (is_single() or is_page()) and !is_attachment() )
-		{
-			$post = $this->get('post');
+		if( $add_current ){
 
-			if( $post )
-				$breadcrumb[] = ['title' => $post->title];
-		}
-		elseif( is_archive() )
-		{
-			$term = $this->get('term');
+			if( (is_single() || is_page()) && !is_attachment() )
+			{
+				$post = $this->get('post');
 
-			if( $term )
-				$breadcrumb[] = ['title' => $term->title];
+				if( $post )
+					$breadcrumb[] = ['title' => $post->title];
+			}
+			elseif( is_archive() )
+			{
+				$term = $this->get('term');
+
+				if( $term )
+					$breadcrumb[] = ['title' => $term->title];
+			}
 		}
 
 		$this->data['breadcrumb'] = $breadcrumb;

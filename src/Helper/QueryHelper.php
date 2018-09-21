@@ -1,6 +1,6 @@
 <?php
 
-namespace Metabolism\WordpressBundle\Entity;
+namespace Metabolism\WordpressBundle\Helper;
 
 use Metabolism\WordpressBundle\Helper\ACF;
 
@@ -33,6 +33,41 @@ class Query
 		}
 
 		return $terms;
+	}
+
+	public static function get_adjacent_posts($post_id, $args=[], $loop=false)
+	{
+		$default_args = [
+			'orderby' => 'menu_order',
+			'order' => 'ASC',
+			'posts_per_page' => -1,
+			'fields' => 'ids'
+		];
+
+		$args = array_merge($default_args, $args);
+
+		$query = new \WP_Query($args);
+
+		$next_id = $prev_id = false;
+
+		foreach($query->posts as $key => $_post_id) {
+			if($_post_id == $post_id){
+				$next_id = isset($query->posts[$key + 1]) ? $query->posts[$key + 1] : false;
+				$prev_id = isset($query->posts[$key - 1]) ? $query->posts[$key - 1] : false;
+				break;
+			}
+		}
+
+		if( !$next_id && $loop )
+			$next_id = $query->posts[0];
+
+		if( !$prev_id && $loop )
+			$prev_id = $query->posts[ count($query->posts) - 1 ];
+
+		return [
+			'next' => $next_id ? new Post($next_id) : false,
+			'prev' => $prev_id ? new Post($prev_id) : false
+		];
 	}
 
 
