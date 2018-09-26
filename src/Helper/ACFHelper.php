@@ -185,6 +185,7 @@ class ACF
 	public function clean($raw_objects)
 	{
 		$objects = [];
+		$df = get_option('date_format');
 
 		if( !$raw_objects or !is_array($raw_objects) )
 			return $objects;
@@ -231,6 +232,14 @@ class ACF
 					else
 						$objects[$object['name']] = $object['value'];
 
+					break;
+
+				case 'date_picker';
+
+					$object['value'] = (string) mysql2date( $df, $object['value']);
+					$object['value'] = apply_filters('get_the_date', $object['value'], $df);
+
+					$objects[$object['name']] = $object['value'];
 					break;
 
 				case 'gallery';

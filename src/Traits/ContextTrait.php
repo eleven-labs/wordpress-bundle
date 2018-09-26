@@ -322,6 +322,8 @@ Trait ContextTrait
 			array_map($callback, $posts);
 
 		$this->data[$key] = array_merge($this->data[$key], $posts);
+
+		return $this->data[$key];
 	}
 
 
