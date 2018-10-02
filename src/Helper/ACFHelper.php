@@ -236,6 +236,8 @@ class ACF
 
 				case 'date_picker';
 
+					$objects[$object['name'].'_gmt'] = $object['value'];
+
 					$object['value'] = (string) mysql2date( $df, $object['value']);
 					$object['value'] = apply_filters('get_the_date', $object['value'], $df);
 
