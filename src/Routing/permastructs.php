@@ -112,7 +112,7 @@ class Permastuct{
 		$path = str_replace('%/', '}/', str_replace('/%', '/{', $struct));
 		$path = preg_replace('/\%$/', '}/', preg_replace('/^\%/', '/{', $path));
 		$path = trim($path, '/');
-		$path = !empty($this->locale)? $this->locale.'/'.$path: $path;
+		//$path = !empty($this->locale)? $this->locale.'/'.$path: $path;
 
 		return ['singular'=>$path, 'archive'=>$path.'/'.$this->wp_rewrite->pagination_base.'/{page}'];
 	}
@@ -150,7 +150,11 @@ if( $_config->get('multisite.multilangue') && !$_config->get('multisite.subdomai
 	{
 		switch_to_blog( $site->blog_id );
 
-		$locale = trim($site->path, '/');
+		$lang = get_blog_option($site->blog_id, 'WPLANG');
+		$lang = explode('_', $lang);
+
+		$locale = empty($lang) ? 'en' : $lang[0];
+
 		new Permastuct($collection, $locale, $controller_name);
 	}
 
