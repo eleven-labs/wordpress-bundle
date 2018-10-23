@@ -77,7 +77,7 @@ class ConfigLoader {
 		elseif( $_config->get('multisite') )
 		{
 			define( 'MULTISITE', true );
-			define( 'SUBDOMAIN_INSTALL', $_config->get('multisite.subdomain_install') );
+			define( 'SUBDOMAIN_INSTALL', $_config->get('multisite.subdomain') );
 			define( 'DOMAIN_CURRENT_SITE', $_config->get('multisite.domain', $_SERVER['HTTP_HOST']));
 			define( 'SITE_ID_CURRENT_SITE', $_config->get('multisite.site_id', 1));
 			define( 'BLOG_ID_CURRENT_SITE', $_config->get('multisite.blog_id', 1));
