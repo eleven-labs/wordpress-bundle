@@ -1,5 +1,5 @@
 {
-  "name": "metabolism/wordpress-bundle",
+  "name": "eleven-labs/wordpress-bundle",
   "version": "2.0.1",
   "description": "Wordpress bundle for Symfony 4.0.*",
   "license": "GPL-3.0-or-later",
@@ -15,7 +15,7 @@
   "extra": {
     "post-package-install": {
       "create": {
-        "metabolism/wordpress-bundle": {
+        "eleven-labs/wordpress-bundle": {
           "web/uploads": 777,
           "web/wp-bundle/upgrade": 777,
           "web/wp-bundle/languages": 777,
@@ -23,7 +23,7 @@
         }
       },
       "copy": {
-        "metabolism/wordpress-bundle": {
+        "eleven-labs/wordpress-bundle": {
           "tools/wp-config.php": "web/wp-config.php",
           "doc/wordpress.sample.yml": "config/wordpress.yml",
           "tools/mu-plugins/wp-bundle.php": "web/wp-bundle/mu-plugins/wp-bundle.php"
