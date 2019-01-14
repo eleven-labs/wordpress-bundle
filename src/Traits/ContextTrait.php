@@ -52,6 +52,14 @@ Trait ContextTrait
 		$this->data['options'] = $this->getFields('options');
 	}
 
+	public function wp_maintenance_mode($strict = false)
+	{
+		if ($strict)
+			return get_option('maintenance_field', false);
+		else
+			return !current_user_can('editor') && !current_user_can('administrator') && get_option('maintenance_field', false);
+	}
+
 
 	protected function getFields($id)
 	{
@@ -117,14 +125,14 @@ Trait ContextTrait
 			'home_url'           => home_url('/'),
 			'search_url'         => get_search_link(),
 			'privacy_policy_url' => get_privacy_policy_url(),
-			'maintenance_mode'   => wp_maintenance_mode()
+			'maintenance_mode'   => $this->wp_maintenance_mode()
 		];
 
 		if( is_multisite() )
 			$this->data['network_home_url'] = trim(network_home_url(), '/');
 
 		$this->data = array_merge($this->data, [
-			'maintenance_mode' => wp_maintenance_mode(),
+			'maintenance_mode' => $this->wp_maintenance_mode(),
 			'tagline' => get_bloginfo('description'),
 			'posts_per_page' => get_option( 'posts_per_page' )
 		]);
@@ -545,7 +553,7 @@ Trait ContextTrait
 		}
 
 		$this->data['breadcrumb'] = $breadcrumb;
-		
+
 		return $this->data['breadcrumb'];
 	}
 
