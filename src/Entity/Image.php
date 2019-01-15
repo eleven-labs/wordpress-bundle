@@ -33,7 +33,7 @@ class Image extends Entity
 		if ( !self::$wp_upload_dir )
 			self::$wp_upload_dir = wp_upload_dir();
 
-		return self::$wp_upload_dir[$field];
+			return self::$wp_upload_dir[$field];
 	}
 
 
@@ -52,10 +52,11 @@ class Image extends Entity
 		if( empty($metadata) || !isset($metadata['file'], $metadata['image_meta']) )
 			return false;
 
-		$metadata['src']  = $this->uploadDir('basedir').'/'.$metadata['file'];
+
+		$metadata['src']  = $this->uploadDir('baseurl').'/'.$metadata['file'];
 		$metadata['src']  = str_replace(WP_FOLDER.'/..', '', $metadata['src']);
 
-		$metadata['file'] = $this->uploadDir('relative').'/'.$metadata['file'];
+		$metadata['file'] = $this->uploadDir('baseurl').'/'.$metadata['file'];
 		$metadata['meta'] = $metadata['image_meta'];
 		$metadata['alt']  = trim(strip_tags(get_post_meta($id, '_wp_attachment_image_alt', true)));
 
