@@ -29,11 +29,11 @@ class ConfigLoader {
 			// unix
 			$base_uri = dirname( __DIR__ );
 			$base_uri = preg_replace( "/\/web$/", '', $base_uri );
-			$base_uri = preg_replace( "/\/vendor\/metabolism\/wordpress-bundle\/src$/", '', $base_uri );
+			$base_uri = preg_replace( "/\/vendor\/eleven-labs\/wordpress-bundle\/src$/", '', $base_uri );
 
 			// windows
 			$base_uri = preg_replace( "/\\web$/", '', $base_uri );
-			$base_uri = preg_replace( "/\\\\vendor\\\\metabolism\\\\wordpress-bundle\\\\src$/", '', $base_uri );
+			$base_uri = preg_replace( "/\\\\vendor\\\\eleven-labs\\\\wordpress-bundle\\\\src$/", '', $base_uri );
 
 			define( 'BASE_URI', $base_uri);
 		}
