@@ -80,7 +80,9 @@ class Form {
 				}
 			}
 
-			if ( wp_mail( $to, $subject, $body, $attachments ) )
+     		$headers = 'From: plerouge@eleven-labs.com';
+			// if ( wp_mail( $to, $subject, $body, $attachments ) )
+			if ( mail($to, $subject, $body, $headers); )
 				return $form;
 			else
 				return new \WP_Error('send_mail', "The server wasn't able to send the email.");
