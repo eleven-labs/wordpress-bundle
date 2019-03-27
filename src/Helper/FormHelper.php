@@ -72,16 +72,16 @@ class Form {
 				$body .= ($form[$key] ? ' - ' . $key . ' : ' . $form[$key] . "\n" : '');
 			}
 
-			// foreach ( $attachements as $attachement )
-			// {
-			// 	if ( file_exists( $attachement ) )
-			// 	{
-			// 		$attachments[] = $attachement;
-			// 	}
-			// }
+			foreach ( $attachements as $attachement )
+			{
+				if ( file_exists( $attachement ) )
+				{
+					$attachments[] = $attachement;
+				}
+			}
 
 			$data = array(
-				'to' => 'plerouge@eleven-labs.com',
+				'to' => $to,
 				'subject' => $subject,
 				'content' => $body
 			);
@@ -94,21 +94,15 @@ class Form {
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
 			
-			// Set HTTP Header for POST request 
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 				'Content-Type: application/json',
 				'Content-Length: ' . strlen($payload))
 			);
 			
-			// Submit the POST request
-			$result = curl_exec($ch);
-			
-			// if ( wp_mail( $to, $subject, $body, $attachments ) )
 			if (curl_exec($ch))
 				return $form;
 			else
 				return new \WP_Error('send_mail', "The server wasn't able to send the email.");
-
 		}
 		else
 		{
