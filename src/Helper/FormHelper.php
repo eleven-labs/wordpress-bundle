@@ -72,17 +72,39 @@ class Form {
 				$body .= ($form[$key] ? ' - ' . $key . ' : ' . $form[$key] . "\n" : '');
 			}
 
-			foreach ( $attachements as $attachement )
-			{
-				if ( file_exists( $attachement ) )
-				{
-					$attachments[] = $attachement;
-				}
-			}
+			// foreach ( $attachements as $attachement )
+			// {
+			// 	if ( file_exists( $attachement ) )
+			// 	{
+			// 		$attachments[] = $attachement;
+			// 	}
+			// }
 
-     		$headers = 'From: plerouge@eleven-labs.com';
+			$data = array(
+				'to' => 'plerouge@eleven-labs.com',
+				'subject' => $subject,
+				'content' => $body
+			);
+			
+			$payload = json_encode($data);
+			
+			$ch = curl_init('https://us-central1-valtus.cloudfunctions.net/email');
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+			
+			// Set HTTP Header for POST request 
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($payload))
+			);
+			
+			// Submit the POST request
+			$result = curl_exec($ch);
+			
 			// if ( wp_mail( $to, $subject, $body, $attachments ) )
-			if ( mail($to, $subject, $body, $headers))
+			if (curl_exec($ch))
 				return $form;
 			else
 				return new \WP_Error('send_mail', "The server wasn't able to send the email.");
