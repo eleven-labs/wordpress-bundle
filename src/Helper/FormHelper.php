@@ -84,8 +84,8 @@ class Form {
 				"key" => $_SERVER['MANDRILL_API_KEY'],
 				"message" => array(
 					"to" => array( 
-						array("email" => 'pierre.lerouge.pro@gmail.com'),
-						array("email" => 'pieka@live.fr'),
+						array("email" => $to),
+						array("email" => 'emmanuelle.michalet@valtus.fr'),
 					),
 					"subject" => $subject,
 					"html" => $body,
