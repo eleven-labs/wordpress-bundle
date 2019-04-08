@@ -81,14 +81,22 @@ class Form {
 			}
 
 			$data = array(
-				'to' => $to,
-				'subject' => $subject,
-				'content' => $body
+				"key" => $_SERVER['MANDRILL_API_KEY'],
+				"message" => array(
+					"to" => array( 
+						array("email" => 'pierre.lerouge.pro@gmail.com'),
+						array("email" => 'pieka@live.fr'),
+					),
+					"subject" => $subject,
+					"html" => $body,
+					"from_email" => "drh@valtus.fr",
+					"from_name" => "Contact Valtus",
+				),
 			);
 			
 			$payload = json_encode($data);
 			
-			$ch = curl_init('https://us-central1-valtus.cloudfunctions.net/email');
+			$ch = curl_init($_SERVER['MANDRILL_API_URL']);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 			curl_setopt($ch, CURLOPT_POST, true);
@@ -98,8 +106,10 @@ class Form {
 				'Content-Type: application/json',
 				'Content-Length: ' . strlen($payload))
 			);
-			
-			if (curl_exec($ch))
+	
+			$result = json_decode(curl_exec($ch));
+
+			if ($result[0]->status === 'sent') 
 				return $form;
 			else
 				return new \WP_Error('send_mail', "The server wasn't able to send the email.");
