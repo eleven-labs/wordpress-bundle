@@ -115,12 +115,10 @@ class ConfigLoader {
 		$mysql = explode('@', str_replace('mysql://', '', $_SERVER['DATABASE_URL']));
 		$mysql[0] = explode(':', $mysql[0]);
 		$mysql[1] = explode('/', $mysql[1]);
-
 		define( 'DB_NAME', $mysql[1][1]);
 		define( 'DB_USER', $mysql[0][0]);
 		define( 'DB_PASSWORD', $mysql[0][1]);
-		// define( 'DB_HOST', $mysql[1][0]);
-		define( 'DB_HOST', ':/cloudsql/'.$_SERVER['CLOUD_SQL_INSTANCE']);
+		define( 'DB_HOST', $mysql[1][0]);
 		define( 'DB_CHARSET', $_config->get('database.charset', 'utf8mb4'));
 		define( 'DB_COLLATE', $_config->get('database.collate', ''));
 
